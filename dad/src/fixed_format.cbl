@@ -1,0 +1,57 @@
+IDENTIFICATION DIVISION.
+       PROGRAM-ID. FIXED-FORMAT.
+       AUTHOR. DIOGO.
+       DATE-WRITTEN. TODAY.
+       
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01 WS-VARIAVEIS.
+           05 NOME           PIC X(20) VALUE "JOAO SILVA".
+           05 IDADE          PIC 99 VALUE 35.
+           05 SALARIO        PIC 9(6)V99 VALUE 5500.00.
+           05 NOVO-SALARIO   PIC 9(6)V99.
+           05 CONTADOR       PIC 999 VALUE 0.
+           05 TOTAL-SALARIO  PIC 9(8)V99 VALUE 0.
+           05 MEDIA-SALARIO  PIC 9(6)V99.
+       
+       PROCEDURE DIVISION.
+       MAIN-LOGIC.
+           DISPLAY "=== DEMO COBOL ANALISE DE DADOS ==="
+           DISPLAY " ".
+           
+           PERFORM INITIALIZATION
+           PERFORM PROCESS-DATA
+           PERFORM SHOW-RESULTS
+           
+           DISPLAY " ".
+           DISPLAY "=== FIM DA DEMONSTRACAO ==="
+           STOP RUN.
+       
+       INITIALIZATION.
+           DISPLAY "Inicializando sistema..."
+           MOVE 0 TO CONTADOR
+           MOVE 0 TO TOTAL-SALARIO.
+       
+       PROCESS-DATA.
+           PERFORM VARYING CONTADOR FROM 1 BY 1 UNTIL CONTADOR > 5
+               PERFORM PROCESS-EMPLOYEE
+           END-PERFORM.
+       
+       PROCESS-EMPLOYEE.
+           ADD SALARIO TO TOTAL-SALARIO
+           DISPLAY "Processando funcionario: " NOME
+           DISPLAY "  Idade: " IDADE " anos"
+           DISPLAY "  Salario: R$" SALARIO
+           DISPLAY " ".
+           
+           COMPUTE NOVO-SALARIO = SALARIO * 1.10
+           MOVE NOVO-SALARIO TO SALARIO.
+       
+       SHOW-RESULTS.
+           COMPUTE MEDIA-SALARIO = TOTAL-SALARIO / 5
+           DISPLAY "=== RESULTADOS ==="
+           DISPLAY "Total de funcionarios: 5"
+           DISPLAY "Total de salarios: R$" TOTAL-SALARIO
+           DISPLAY "Media salarial: R$" MEDIA-SALARIO
+           COMPUTE NOVO-SALARIO = MEDIA-SALARIO * 1.10
+           DISPLAY "Novo salario medio: R$" NOVO-SALARIO.
